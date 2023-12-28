@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
+import useUserOptionStore from "../stores/OptionsStore";
+import useIsPlaying from "../stores/isPlayingStore";
 
-interface TimerProps {
-  timerOption: number
-  isPlaying: boolean
-}
+const Timer = () => {
+  const isPlayingStore = useIsPlaying();
 
-const Timer = ({timerOption, isPlaying}:TimerProps) => {
+  let storedOptions = useUserOptionStore();
 
-  let [minutes, setMinutes] = useState(timerOption);
+  let [minutes, setMinutes] = useState(storedOptions.timerMinutes);
   let [secondsUnits, setSecondsUnits] = useState(0);
   let [secondsTens, setSecondsTens] = useState(0);
 
   useEffect(() => {
-    if (!isPlaying){
-      setMinutes(timerOption);
+    if (!isPlayingStore.isPlaying){
+      setMinutes(storedOptions.timerMinutes);
       setSecondsUnits(0);
       setSecondsTens(0);
     }
-    if(isPlaying){
+    if(isPlayingStore.isPlaying){
       if (minutes === 0 && secondsTens === 0 && secondsUnits === 0) {
         secondsUnits = secondsUnits;
         //Condition that stops this useEffect
@@ -38,7 +38,7 @@ const Timer = ({timerOption, isPlaying}:TimerProps) => {
         }, 1000);
       } //separar isto para uma função
     }
-  }, [isPlaying, secondsUnits, timerOption]);
+  }, [isPlayingStore.isPlaying, secondsUnits, storedOptions.timerMinutes]);
 
   return (
     <div className="flex flex-col items-center bg-sky-100 w-fit rounded-lg px-32 shadow-inner">

@@ -1,16 +1,14 @@
-interface TimerOptionsProps {
-  selectedOption: (minutes: number) => void
-}
+import useUserOption from "../stores/OptionsStore";
 
-const TimerOptions = ({selectedOption}:TimerOptionsProps) => {
-  const sendTimerOption = (minutes: number) => {selectedOption(minutes)}
+const TimerOptions = () => {
+  const minutesStore = useUserOption();
 
   return (
     <div className="flex items-center gap-x-8 bg-sky-100 w-fit py-1 px-12 rounded-lg shadow-md">
       <button
         id="shortBreak"
         className="p-1 rounded-md font-medium text-sky-800 duration-500 hover:bg-sky-700 hover:text-amber-100 hover:cursor-pointer"
-        onClick={() => sendTimerOption(5)}
+        onClick={() => minutesStore.setTimerMinutes(5)}
       >
         Short
         <br />
@@ -19,14 +17,14 @@ const TimerOptions = ({selectedOption}:TimerOptionsProps) => {
       <button
         id="pomodoro"
         className="p-1 rounded-md font-medium text-sky-800 duration-500 hover:bg-sky-700 hover:text-amber-100 hover:cursor-pointer"
-        onClick={() => sendTimerOption(25)}
+        onClick={() => minutesStore.setTimerMinutes(25)}
       >
         Pomodoro
       </button>
       <button
         id="longBreak"
         className="p-1 rounded-md font-medium text-sky-800 duration-500 hover:bg-sky-700 hover:text-amber-100 hover:cursor-pointer"
-        onClick={() => sendTimerOption(10)}
+        onClick={() => minutesStore.setTimerMinutes(10)}
       >
         Long
         <br />

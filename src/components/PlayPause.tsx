@@ -1,10 +1,10 @@
-interface PlayPauseProps {
-  play: (isPlaying: boolean) => void;
-  //pause: (isPaused: boolean) => void; Talvez criar um state de pause para colmatar o estado atual de stop/reset 
-}
+//pause: (isPaused: boolean) => void; Talvez criar um state de pause para colmatar o estado atual de stop/reset 
 
-const PlayPause = ({ play }: PlayPauseProps) => {
-  const sendPlayerOption = (isPlaying: boolean) => {play(isPlaying)}
+import useIsPlaying from "../stores/isPlayingStore";
+
+
+const PlayPause = () => {
+  const isPlayingStore = useIsPlaying();
 
   return (
     <div
@@ -14,7 +14,7 @@ const PlayPause = ({ play }: PlayPauseProps) => {
       <button
         id="playContainer"
         className="rounded-full p-1 group duration-500 hover:bg-sky-800 hover:cursor-pointer"
-        onClick={() => sendPlayerOption(true)}
+        onClick={() => isPlayingStore.setIsPlaying(true)}
       >
         <svg
           id="playButton"
@@ -33,7 +33,7 @@ const PlayPause = ({ play }: PlayPauseProps) => {
       <button
         id="pauseContainer"
         className="rounded-full p-1 group duration-500 hover:bg-sky-800 hover:cursor-pointer"
-        onClick={() => sendPlayerOption(false)}
+        onClick={() => isPlayingStore.setIsPlaying(false)}
       >
         <svg
           id="pauseButton"
